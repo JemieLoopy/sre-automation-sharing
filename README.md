@@ -13,10 +13,10 @@ I will update one by one every weekend or if you guys need help, please sent ema
 
 ### How to
 Requirement Tools:
- - Client Tools in your PC: kubectl, helm, helmfile, helmdiff plugin, git [requirement repo](https://github.com/JemieLoopy/sre-automation-sharing/tree/main/requirement-tools)
+ - Client Tools in your PC: kubectl, helm, helmfile, helmdiff plugin, git. [view guide](https://github.com/JemieLoopy/sre-automation-sharing/tree/main/requirement-tools)
  - K8S Cluster with: ingress nginx, metal-lb, storage-class
- - Provision Minio Distributed(s3 storage require for some important backend to run in Large Production env)
- - Provision Harbor Private registry(I don't want to get every thing from internet cause some security reasons)
+ - Provision Minio Distributed(s3 storage require for some important backend to run in Large Production env). [view guide](https://github.com/JemieLoopy/sre-automation-sharing/tree/main/minio-distributed)
+ - Provision Harbor Private registry(I don't want to get every thing from internet cause some security reasons). [view guide](https://github.com/JemieLoopy/sre-automation-sharing/tree/main/private-registry)
 
 Monitoring Tools:
  - Provision Prometheus for monitor k8s cluster and services (Gitops)

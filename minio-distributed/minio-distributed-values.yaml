@@ -1,0 +1,110 @@
+consoleIngress:
+  annotations:
+    nginx.org/websocket-services: minio-distributed-console
+  enabled: true
+  hosts:
+  - minio-console.your_domain.xyz
+  ingressClassName: nginx
+  labels: {}
+  path: /
+  tls:
+  - hosts:
+    - minio-console.your_domain.xyz
+    secretName: your_secret-tls
+consoleService:
+  annotations: {}
+  clusterIP: null
+  externalIPs: []
+  loadBalancerIP: null
+  nodePort: 32001
+  port: "9001"
+  type: ClusterIP
+deploymentUpdate:
+  maxSurge: 100%
+  maxUnavailable: 0
+  type: RollingUpdate
+drivesPerNode: 1
+environment: null
+
+ingress:
+  annotations:
+    #nginx.org/client-max-body-size: "0"
+    ingress.kubernetes.io/proxy-body-size: "0"
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+  enabled: true
+  hosts:
+  - minio.your_domain.xyz
+  ingressClassName: nginx
+  labels: {}
+  path: /
+  tls:
+  - hosts:
+    - minio.your_domain.xyz
+    secretName: your_secret-tls
+mcImage:
+  pullPolicy: IfNotPresent
+  repository: quay.io/minio/mc
+  tag: RELEASE.2023-06-28T21-54-17Z
+minioAPIPort: "9000"
+minioConsolePort: "9001"
+mode: distributed
+mountPath: /export
+
+networkPolicy:
+  allowExternal: true
+  enabled: false
+oidc:
+  claimName: policy
+  claimPrefix: ""
+  clientId: minio
+  clientSecret: ""
+  comment: ""
+  configUrl: https://identity-provider-url/.well-known/openid-configuration
+  enabled: false
+  redirectUri: https://console-endpoint-url/oauth_callback
+  scopes: openid,profile,email
+persistence:
+  accessMode: ReadWriteOnce
+  annotations: {}
+  enabled: true
+  existingClaim: ""
+  size: 100Gi
+  storageClass: ""
+  subPath: ""
+  volumeName: ""
+podDisruptionBudget:
+  enabled: false
+  maxUnavailable: 1
+pools: 1
+replicas: 3
+resources:
+  requests:
+    memory: 2Gi
+rootPassword: your_secret_password
+rootUser: admin
+service:
+  annotations: {}
+  clusterIP: null
+  externalIPs: []
+  loadBalancerIP: null
+  nodePort: 32000
+  port: "9000"
+  type: ClusterIP
+serviceAccount:
+  create: true
+  name: minio-sa
+statefulSetUpdate:
+  updateStrategy: RollingUpdate
+svcaccts: []
+tls:
+  certSecret: ""
+  enabled: false
+  privateKey: private.key
+  publicCrt: public.crt
+tolerations: []
+topologySpreadConstraints: []
+trustedCertsSecret: ""
+users:
+- accessKey: admin_console
+  policy: consoleAdmin
+  secretKey: your_secret_password

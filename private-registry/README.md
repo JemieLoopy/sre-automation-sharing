@@ -1,4 +1,4 @@
-# Requirement tools
+# Private Registry with Harbor
 Hello dudes,   
 For work with my courses, you need some requirement tools on your PC  
 I will guide you how to do it  
