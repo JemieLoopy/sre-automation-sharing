@@ -1,12 +1,14 @@
-# sre-automation-sharing
+# Welcome overview
 Hello dude,
 This is my main share for All SRE tools i know and modified for run in my private environments
 In all my documents, i will show you guys how to build those tools quickly before explain how it works, just 5 minutes required every topic
 My vision is after all bellow topics, you can install all requirement applications for SRE and also provide it with Gitops(basic) to team working in your corporate
-[Note: ] So you must install all requirement tools  to avoid any exception issues
+### Note  
+So you must install all requirement tools  to avoid any exception issues
 Hope it help some new guys 
 I will update one by one every weekend or if you guys need help, please sent email to me: jemieloopy@gmail.com
 
+### How to
 Requirement Tools:
  - K8S Cluster with: ingress nginx, metal-lb, storage-class
  - Provision Minio Distributed(s3 storage require for some important backend to run in Large Production env)
