@@ -1,0 +1,239 @@
+expose:
+  type: ingress
+  tls:
+    enabled: true
+    certSource: secret
+    auto:
+      commonName: ""
+    secret:
+      secretName: "your-secret-tls"
+      notarySecretName: "your-secret-tls"
+  ingress:
+    hosts:
+      core: registry.your_domain.xyz
+      notary: notary.your_domain.xyz
+    controller: default
+    kubeVersionOverride: ""
+    className: "nginx"
+    annotations:
+      ingress.kubernetes.io/ssl-redirect: "true"
+      ingress.kubernetes.io/proxy-body-size: "0"
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/proxy-body-size: "0"
+  clusterIP:
+    name: harbor
+    annotations: {}
+    ports:
+      httpPort: 80
+      httpsPort: 443
+      notaryPort: 4443
+  nodePort:
+    name: harbor
+    ports:
+      http:
+        port: 80
+        nodePort: 30002
+      https:
+        port: 443
+        nodePort: 30003
+      notary:
+        port: 4443
+        nodePort: 30004
+
+externalURL: https://registry.your_domain.xyz
+
+
+ipFamily:
+  # ipv6Enabled set to true if ipv6 is enabled in cluster, currently it affected the nginx related component
+  ipv6:
+    enabled: true
+  # ipv4Enabled set to true if ipv4 is enabled in cluster, currently it affected the nginx related component
+  ipv4:
+    enabled: true
+
+persistence:
+  enabled: true
+  resourcePolicy: "keep"
+  persistentVolumeClaim:
+    registry:
+      existingClaim: ""
+      storageClass: ""
+      subPath: ""
+      accessMode: ReadWriteOnce
+      size: 100Gi
+      annotations: {}
+    chartmuseum:
+      existingClaim: ""
+      storageClass: ""
+      subPath: ""
+      accessMode: ReadWriteOnce
+      size: 100Gi
+      annotations: {}
+    jobservice:
+      jobLog:
+        existingClaim: ""
+        storageClass: ""
+        subPath: ""
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        annotations: {}
+      scanDataExports:
+        existingClaim: ""
+        storageClass: ""
+        subPath: ""
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        annotations: {}
+    database:
+      existingClaim: ""
+      storageClass: ""
+      subPath: ""
+      accessMode: ReadWriteOnce
+      size: 20Gi
+      annotations: {}
+    redis:
+      existingClaim: ""
+      storageClass: ""
+      subPath: ""
+      accessMode: ReadWriteOnce
+      size: 20Gi
+      annotations: {}
+    trivy:
+      existingClaim: ""
+      storageClass: ""
+      subPath: ""
+      accessMode: ReadWriteOnce
+      size: 20Gi
+      annotations: {}
+  imageChartStorage:
+    disableredirect: true
+    type: s3
+    filesystem:
+      rootdirectory: /storage
+    s3:
+      region: us-east-1
+      bucket: your_bucket
+      accesskey: your_access_key
+      secretkey: your_secret_key
+      regionendpoint: http://minio-distributed.minio_name_space.svc.cluster.local:9000
+      encrypt: false
+      secure: false
+      v4auth: true
+imagePullPolicy: IfNotPresent
+updateStrategy:
+  type: Recreate
+
+# The initial password of Harbor admin. Change it from portal after launching Harbor
+harborAdminPassword: "your_admin_password"
+chartmuseum:
+  enabled: true
+  # set the service account to be used, default if left empty
+  serviceAccountName: ""
+  # mount the service account token
+  automountServiceAccountToken: false
+  # Harbor defaults ChartMuseum to returning relative urls, if you want using absolute url you should enable it by change the following value to 'true'
+  absoluteUrl: false
+  image:
+    repository: goharbor/chartmuseum-photon
+    tag: v2.7.0
+  replicas: 1
+  revisionHistoryLimit: 10
+  # resources:
+  #  requests:
+  #    memory: 256Mi
+  #    cpu: 100m
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  ## Additional deployment annotations
+  podAnnotations: {}
+  ## The priority class to run the pod as
+  priorityClassName:
+  ## limit the number of parallel indexers
+  indexLimit: 0
+
+trivy:
+  # enabled the flag to enable Trivy scanner
+  enabled: true
+  
+notary:
+  enabled: true
+database:
+  # if external database is used, set "type" to "external"
+  # and fill the connection informations in "external" section
+  type: internal
+  internal:
+    # set the service account to be used, default if left empty
+    serviceAccountName: ""
+    # mount the service account token
+    automountServiceAccountToken: false
+    image:
+      repository: goharbor/harbor-db
+      tag: v2.7.0
+    # The initial superuser password for internal database
+    password: "SETME"
+    # The size limit for Shared memory, pgSQL use it for shared_buffer
+    # More details see:
+    # https://github.com/goharbor/harbor/issues/15034
+    shmSizeLimit: 512Mi
+    # resources:
+    #  requests:
+    #    memory: 256Mi
+    #    cpu: 100m
+    # The timeout used in livenessProbe; 1 to 5 seconds
+    livenessProbe:
+      timeoutSeconds: 1
+    # The timeout used in readinessProbe; 1 to 5 seconds
+    readinessProbe:
+      timeoutSeconds: 1
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+    ## The priority class to run the pod as
+    priorityClassName:
+    initContainer:
+      migrator: {}
+      # resources:
+      #  requests:
+      #    memory: 128Mi
+      #    cpu: 100m
+      permissions: {}
+      # resources:
+      #  requests:
+      #    memory: 128Mi
+      #    cpu: 100m
+  # The maximum number of connections in the idle connection pool per pod (core+exporter).
+  # If it <=0, no idle connections are retained.
+  maxIdleConns: 100
+  # The maximum number of open connections to the database per pod (core+exporter).
+  # If it <= 0, then there is no limit on the number of open connections.
+  # Note: the default number of connections is 1024 for postgre of harbor.
+  maxOpenConns: 900
+  ## Additional deployment annotations
+  podAnnotations: {}
+
+redis:
+  # if external Redis is used, set "type" to "external"
+  # and fill the connection informations in "external" section
+  type: internal
+  internal:
+    # set the service account to be used, default if left empty
+    serviceAccountName: ""
+    # mount the service account token
+    automountServiceAccountToken: false
+    image:
+      repository: goharbor/redis-photon
+      tag: v2.7.0
+    # resources:
+    #  requests:
+    #    memory: 256Mi
+    #    cpu: 100m
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+    ## The priority class to run the pod as
+    priorityClassName:
+  ## Additional deployment annotations
+  podAnnotations: {}
+metrics:
+  enabled: true

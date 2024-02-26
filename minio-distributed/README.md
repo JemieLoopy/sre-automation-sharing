@@ -26,7 +26,7 @@ Run command to add repo:
 ```
 cd minio-distributed
 helmfile repos
-helmfile apply --selector name=minio
+helmfile apply --selector name=minio-distributed
 # You can run simply: helmfile sync
 
 ```

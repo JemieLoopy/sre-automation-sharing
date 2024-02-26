@@ -11,34 +11,38 @@ So you must install all requirement tools  to avoid any exception issues
 Hope it help some new guys 
 I will update one by one every weekend or if you guys need help, please sent email to me: jemieloopy@gmail.com
 
-### How to
-Requirement Tools:
+## How to
+### Requirement Tools:
  - Client Tools in your PC: kubectl, helm, helmfile, helmdiff plugin, git. [view guide](https://github.com/JemieLoopy/sre-automation-sharing/tree/main/requirement-tools)
  - K8S Cluster with: ingress nginx, metal-lb, storage-class
  - Provision Minio Distributed(s3 storage require for some important backend to run in Large Production env). [view guide](https://github.com/JemieLoopy/sre-automation-sharing/tree/main/minio-distributed)
- - Provision Harbor Private registry(I don't want to get every thing from internet cause some security reasons). [view guide](https://github.com/JemieLoopy/sre-automation-sharing/tree/main/private-registry)
+ - Provision Harbor Private registry(I don't want to get every thing from internet cause some security reasons). [view guide](https://github.com/JemieLoopy/sre-automation-sharing/tree/main/private-registry)  
+   
+ **After install all requirement tools, now you can install almost software with private and secured from your own infrastructure,**  
+ **It is the best practice for your production environment**  
+ **Next chapter, we will begin to deploy some application for SRE**
 
-Monitoring Tools:
+### Monitoring Tools:
  - Provision Prometheus for monitor k8s cluster and services (Gitops)
  - Provision Grafana OSS (Mimir metrics,Loki Loggings,Tempo Tracing) for long time and scalable store
  - Provision ELK stack
  - Provision Grafana with Terraform
  - Grafana Oncall
 
-SRE Alert:
+### SRE Alert:
  - Provision prometheus-alertmanager alert with Gitops
  - Provision metrics(Mimir) alert in Grafana Oncall with Gitops
  - Provision logging(Loki) alert in Grafana Oncall with Gitops
  - Provision Elasticsearch alert in Grafana Oncall with Gitops
 
-SLI, SLO builder:
+### SLI, SLO builder:
   - Updating
 
-SRE dashboard:
+### SRE dashboard:
   - Provision Grafana Dashboard with Gitops
   - Provision Kibana Dashboard with Gitops  
 
-SRE Report:
+### SRE Report:
  - Provision Grafana PDF Exporter -> Export Grafana Dashboard as pdf and sent email
  - SLO,SLI Reports
 
