@@ -1,5 +1,5 @@
 # Welcome overview
-Hello dude,  
+Hello dudes,  
 This is my main share for All SRE tools i know and modified for run in my private environments.  
 In all my documents, i will show you guys how to build those tools quickly before explain how it works, just 5 minutes required every topic  
 My vision is after all bellow topics, you can install all requirement applications for SRE and also provide it with Gitops(basic) to team working in your corporate  
@@ -13,7 +13,7 @@ I will update one by one every weekend or if you guys need help, please sent ema
 
 ### How to
 Requirement Tools:
- - Client Tools in your PC: kubectl, helm, helmfile, helmdiff plugin, git
+ - Client Tools in your PC: kubectl, helm, helmfile, helmdiff plugin, git ![alt text](https://github.com/JemieLoopy/sre-automation-sharing/blob/main/requirements-tools)
  - K8S Cluster with: ingress nginx, metal-lb, storage-class
  - Provision Minio Distributed(s3 storage require for some important backend to run in Large Production env)
  - Provision Harbor Private registry(I don't want to get every thing from internet cause some security reasons)
